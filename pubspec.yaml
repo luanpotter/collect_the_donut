@@ -1,0 +1,33 @@
+name: collect_the_donut
+description: >
+  Everyone knows donuts are the most precious things in the Universe.
+  So there is no time to lose! Collect them all in this 3D platformer!
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flame: ^1.16.0
+  flame_3d: ^0.1.0-dev.1
+  flame_3d_extras: ^0.1.0-dev.1
+  flame_audio: ^2.10.0
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flame_lint: ^1.2.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/audio/sfx/
+    - assets/objects/
+
+  fonts:
+    - family: SingleDay
+      fonts:
+        - asset: assets/fonts/SingleDay-Regular.ttf
