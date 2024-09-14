@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:collect_the_donut/components/player.dart';
 import 'package:flame_3d/core.dart';
+import 'package:flame_3d_extras/model/model_component.dart';
 
 final _r = Random();
 
@@ -41,5 +43,17 @@ extension Vector3Extensions on Vector3 {
 
   Vector3 scaledTo(double newLength) {
     return clone()..scaleTo(newLength);
+  }
+}
+
+extension ModelComponentCollides on ModelComponent {
+  bool collidesWith(Player player, { required double radius }) {
+    if (!player.aabb.intersectsWithAabb3(aabb)) {
+      return false;
+    }
+
+    final v1 = player.position.xz;
+    final v2 = position.xz;
+    return (v1 - v2).length < radius;
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:collect_the_donut/collect_the_donut.dart';
+import 'package:collect_the_donut/components/player.dart';
 import 'package:collect_the_donut/constants.dart';
 import 'package:collect_the_donut/loader.dart';
 import 'package:collect_the_donut/utils.dart';
@@ -36,6 +37,17 @@ class Skeleton extends ModelComponent
     }
 
     super.update(dt);
+
+    final player = game.world.player;
+    final isAttacking = player.action == PlayerAction.attack;
+    if (collidesWith(player, radius: isAttacking ? 1.25 : 0.75)) {
+      if (isAttacking) {
+        game.world.remove(this);
+      } else {
+        game.gameOver();
+      }
+      return;
+    }
 
     if (_idleTimer > 0) {
       _idleTimer -= dt;
