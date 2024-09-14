@@ -5,6 +5,7 @@ import 'package:collect_the_donut/constants.dart';
 import 'package:collect_the_donut/loader.dart';
 import 'package:collect_the_donut/utils.dart';
 import 'package:flame/components.dart' as flame;
+import 'package:flame/geometry.dart';
 import 'package:flame_3d/core.dart';
 import 'package:flame_3d_extras/model/model_component.dart';
 
@@ -19,6 +20,7 @@ class Skeleton extends ModelComponent
   }
 
   final Vector3 _target = Vector3.zero();
+  double _idleTimer = 0.0;
 
   double _lookAngle = 0.0;
   double get lookAngle => _lookAngle;
@@ -35,22 +37,29 @@ class Skeleton extends ModelComponent
 
     super.update(dt);
 
-    final didRotate = _rotate(dt);
-    if (didRotate) {
+    if (_idleTimer > 0) {
+      _idleTimer -= dt;
+      if (_idleTimer <= 0) {
+        _idleTimer = 0;
+        _updateTarget();
+      }
       playAnimationByName('Idle_B', resetClock: false);
+      return;
     } else {
       playAnimationByName('Walking_C', resetClock: false);
-      _move(dt);
     }
+
+    _rotate(dt);
+    _move(dt);
   }
 
-  bool _rotate(double dt) {
+  void _rotate(double dt) {
     final lookAt = _target - position;
     final targetAngle = atan2(lookAt.x, lookAt.z);
-    final angleDiff = targetAngle - _lookAngle;
-    if (angleDiff == 0.0) {
-      return false;
-    }
+    var angleDiff = targetAngle - _lookAngle;
+
+    // normalizes to [-pi, pi]
+    angleDiff = (angleDiff + pi) % tau - pi;
 
     final rotationAngle = _rotationSpeed * dt;
     if (angleDiff.abs() < rotationAngle) {
@@ -58,31 +67,23 @@ class Skeleton extends ModelComponent
     } else {
       lookAngle += angleDiff.sign * rotationAngle;
     }
-    return true;
   }
 
   void _move(double dt) {
-    final lookAt = _target - position;
+    final moveDirection = Vector3(
+      sin(_lookAngle),
+      0,
+      cos(_lookAngle),
+    );
 
-    final distance = lookAt.length;
-    if (distance == 0) {
-      _updateTarget();
-      return;
-    }
     final walkDistance = _linearSpeed * dt;
-    if (distance < walkDistance) {
+    if ((_target - position).length <= walkDistance) {
       position.setFrom(_target);
-      _enforceAngle();
+      _idleTimer = randomDouble(1, 3);
     } else {
-      position += lookAt.scaledTo(walkDistance);
-      _enforceAngle();
+      position += moveDirection.scaled(walkDistance);
+      position.clamp(_worldMin, _worldMax);
     }
-  }
-
-  void _enforceAngle() {
-    final lookAt = _target - position;
-    final targetAngle = atan2(lookAt.x, lookAt.z);
-    lookAngle = targetAngle;
   }
 
   void _updateTarget() {
