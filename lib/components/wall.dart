@@ -13,7 +13,7 @@ class Wall extends flame.Component {
     required Vector3 end,
   }) {
     final direction = end - start;
-    final position = start.clone() + direction.scaledTo(_wallSegmentSize / 2);
+    final position = start + direction.scaledTo(_wallSegmentSize / 2);
     var totalDistance = direction.length;
 
     while (totalDistance >= _wallSegmentSize) {

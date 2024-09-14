@@ -45,6 +45,7 @@ class Player extends ModelComponent
   }
 
   bool _isRunning = false;
+  double _deathTimer = 0.0;
 
   void _updateWeapon() {
     for (final hide in PlayerWeapon.values) {
@@ -64,6 +65,14 @@ class Player extends ModelComponent
 
   final Vector2 _input = Vector2.zero();
 
+  void reset() {
+    action = null;
+    _deathTimer = 0.0;
+    lookAngle = 0.0;
+    position.setZero();
+    _updateWeapon();
+  }
+
   @override
   void update(double dt) {
     if (game.isPaused) {
@@ -71,6 +80,17 @@ class Player extends ModelComponent
     }
 
     super.update(dt);
+
+    if (_deathTimer != 0) {
+      _deathTimer -= dt;
+      if (_deathTimer <= 0) {
+        // make sure we don't go through update again
+        // until the gameOver takes effect
+        _deathTimer = -1;
+        game.gameOver();
+      }
+      return;
+    }
 
     if (_actionTimer != 0.0) {
       _actionTimer -= dt;
@@ -114,6 +134,14 @@ class Player extends ModelComponent
     } else {
       playAnimationByName('Idle', resetClock: false);
     }
+  }
+
+  void die() {
+    if (_deathTimer != 0) {
+      return;
+    }
+    _deathTimer = 2.0;
+    playAnimationByName('Death_B');
   }
 
   @override

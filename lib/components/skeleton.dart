@@ -22,6 +22,7 @@ class Skeleton extends ModelComponent
 
   final Vector3 _target = Vector3.zero();
   double _idleTimer = 0.0;
+  double _deathTimer = 0.0;
 
   double _lookAngle = 0.0;
   double get lookAngle => _lookAngle;
@@ -38,13 +39,22 @@ class Skeleton extends ModelComponent
 
     super.update(dt);
 
+    if (_deathTimer > 0) {
+      _deathTimer -= dt;
+      if (_deathTimer <= 0) {
+        _deathTimer = -1;
+        game.world.remove(this);
+      }
+      return;
+    }
+
     final player = game.world.player;
     final isAttacking = player.action == PlayerAction.attack;
-    if (collidesWith(player, radius: isAttacking ? 1.25 : 0.75)) {
+    if (collidesWith(player, radius: isAttacking ? 1.05 : 0.75)) {
       if (isAttacking) {
-        game.world.remove(this);
+        die();
       } else {
-        game.gameOver();
+        player.die();
       }
       return;
     }
@@ -68,10 +78,7 @@ class Skeleton extends ModelComponent
   void _rotate(double dt) {
     final lookAt = _target - position;
     final targetAngle = atan2(lookAt.x, lookAt.z);
-    var angleDiff = targetAngle - _lookAngle;
-
-    // normalizes to [-pi, pi]
-    angleDiff = (angleDiff + pi) % tau - pi;
+    final angleDiff = _normalizeAngle(targetAngle - _lookAngle);
 
     final rotationAngle = _rotationSpeed * dt;
     if (angleDiff.abs() < rotationAngle) {
@@ -104,6 +111,19 @@ class Skeleton extends ModelComponent
       0.0,
       randomDouble(_worldMin.z, _worldMax.z),
     );
+  }
+
+  // normalizes to [-pi, pi]
+  double _normalizeAngle(double angle) {
+    return (angle + pi) % tau - pi;
+  }
+
+  void die() {
+    if (_deathTimer != 0) {
+      return;
+    }
+    _deathTimer = 0.8; // death animation duration
+    playAnimationByName('Death_A');
   }
 }
 

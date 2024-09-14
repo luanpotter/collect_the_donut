@@ -122,6 +122,7 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
   double skeletonSpawnRate = 0.1;
 
   FutureOr<void> initGame() async {
+    player.reset();
     await addAll([
       player,
 
@@ -148,7 +149,9 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
         period: 1, // 1 second
         repeat: true,
         onTick: () {
-          if (randomBoolean(skeletonSpawnRate)) {
+          if (game.isPaused) {
+            return;
+          } else if (randomBoolean(skeletonSpawnRate)) {
             add(Skeleton());
           } else if (randomBoolean(skeletonSpawnRate)) {
             skeletonSpawnRate += 0.005;
