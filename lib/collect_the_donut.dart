@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collect_the_donut/components/donut.dart';
 import 'package:collect_the_donut/components/floor.dart';
 import 'package:collect_the_donut/components/player.dart';
 import 'package:collect_the_donut/components/wall.dart';
@@ -116,6 +117,11 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
         intensity: 600.0,
       ),
       ...List.generate(3, (_) => Wisp()),
+
+      // donuts
+      Donut(
+        position: Vector3(8, 0.5, -2),
+      ),
 
       // floor and walls
       Floor(
