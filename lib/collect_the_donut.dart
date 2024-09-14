@@ -10,6 +10,7 @@ import 'package:collect_the_donut/menu/main_menu.dart';
 import 'package:collect_the_donut/menu/menu.dart';
 import 'package:collect_the_donut/menu/pause_menu.dart';
 import 'package:collect_the_donut/third_person_camera.dart';
+import 'package:collect_the_donut/utils.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart' show FlameGame;
 import 'package:flame_3d/camera.dart';
@@ -95,6 +96,10 @@ class CollectTheDonutGame extends FlameGame<CollectTheDonutWorld>
   void resume() {
     _removeMenu();
   }
+
+  void collectDonut(Donut donut) {
+    world.spawnDonut();
+  }
 }
 
 class CollectTheDonutWorld extends World3D with TapCallbacks {
@@ -118,11 +123,6 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
       ),
       ...List.generate(3, (_) => Wisp()),
 
-      // donuts
-      Donut(
-        position: Vector3(8, 0.5, -2),
-      ),
-
       // floor and walls
       Floor(
         size: Vector2.all(2 * worldSize),
@@ -136,9 +136,15 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
         end: Vector3(worldSize, 0, worldSize),
       ),
     ]);
+
+    spawnDonut();
   }
 
   void resetGame() {
     removeWhere((e) => true);
+  }
+
+  void spawnDonut() {
+    add(Donut.random());
   }
 }
