@@ -4,6 +4,7 @@ import 'package:collect_the_donut/components/floor.dart';
 import 'package:collect_the_donut/components/player.dart';
 import 'package:collect_the_donut/components/wall.dart';
 import 'package:collect_the_donut/components/wisp.dart';
+import 'package:collect_the_donut/constants.dart';
 import 'package:collect_the_donut/menu/main_menu.dart';
 import 'package:collect_the_donut/menu/menu.dart';
 import 'package:collect_the_donut/menu/pause_menu.dart';
@@ -115,16 +116,16 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
         intensity: 0.8,
       ),
       Floor(
-        size: Vector2.all(32.0),
+        size: Vector2.all(2 * worldSize),
       ),
 
       Wall(
-        start: Vector3(16, 0, -16),
-        end: Vector3(16, 0, 16),
+        start: Vector3(worldSize, 0, -worldSize),
+        end: Vector3(worldSize, 0, worldSize),
       ),
       Wall(
-        start: Vector3(-16, 0, 16),
-        end: Vector3(16, 0, 16),
+        start: Vector3(-worldSize, 0, worldSize),
+        end: Vector3(worldSize, 0, worldSize),
       ),
     ]);
   }

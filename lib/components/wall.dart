@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collect_the_donut/constants.dart';
 import 'package:collect_the_donut/loader.dart';
 import 'package:collect_the_donut/utils.dart';
 import 'package:flame/components.dart' as flame;
@@ -18,7 +19,7 @@ class Wall extends flame.Component {
     while (totalDistance >= _wallSegmentSize) {
       // rotate the wall to align with the start-end line
       final rotation = Quaternion.axisAngle(
-        _up,
+        up,
         atan2(start.z - end.z, start.x - end.x),
       );
 
@@ -49,4 +50,3 @@ class _WallSection extends ModelComponent {
 }
 
 const double _wallSegmentSize = 4.0;
-final Vector3 _up = Vector3(0, 1, 0);

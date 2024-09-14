@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:collect_the_donut/collect_the_donut.dart';
+import 'package:collect_the_donut/constants.dart';
 import 'package:collect_the_donut/input_utils.dart';
 import 'package:collect_the_donut/loader.dart';
 import 'package:flame/components.dart' as flame;
@@ -56,7 +57,7 @@ class Player extends ModelComponent
   double get lookAngle => _lookAngle;
   set lookAngle(double value) {
     _lookAngle = value % tau;
-    transform.rotation.setAxisAngle(_up, value);
+    transform.rotation.setAxisAngle(up, value);
   }
 
   Vector3 get lookAt => Vector3(sin(_lookAngle), 0.0, cos(_lookAngle));
@@ -92,7 +93,9 @@ class Player extends ModelComponent
 
     final speed = _linearSpeed * (_isRunning ? 2.0 : 1.0);
     final movement = lookAt.scaled(-_input.y * speed * dt);
+
     position.add(movement);
+    position.clamp(_worldMin, _worldMax);
 
     return movement.length2 > 0.0;
   }
@@ -128,10 +131,6 @@ class Player extends ModelComponent
   }
 }
 
-const double _rotationSpeed = 3.0;
-const double _linearSpeed = 2.5;
-final Vector3 _up = Vector3(0, 1, 0);
-
 enum PlayerAction {
   attack(timer: 1.0666667222976685),
   ;
@@ -153,3 +152,10 @@ enum PlayerWeapon {
 
   const PlayerWeapon(this.nodeName);
 }
+
+const double _rotationSpeed = 3.0;
+const double _linearSpeed = 2.5;
+
+const double _m = 0.75;
+final Vector3 _worldMin = Vector3(-worldSize + _m, 0, -worldSize + _m);
+final Vector3 _worldMax = Vector3(worldSize - _m, 0, worldSize - _m);

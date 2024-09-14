@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flame_3d/core.dart';
 
-const enableAudio = true;
-
 final _r = Random();
 
 bool randomBoolean(double odds) {

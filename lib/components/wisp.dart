@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:collect_the_donut/collect_the_donut.dart';
+import 'package:collect_the_donut/constants.dart';
 import 'package:collect_the_donut/utils.dart';
 import 'package:flame/components.dart' show HasGameRef;
 import 'package:flame_3d/components.dart';
@@ -55,9 +56,9 @@ class Wisp extends LightComponent with HasGameRef<CollectTheDonutGame> {
 
   void _randomTarget() {
     _target.setValues(
-      randomDouble(-16, 16),
+      randomDouble(-worldSize, worldSize),
       randomDouble(0.3, 1.5),
-      randomDouble(-16, 16),
+      randomDouble(-worldSize, worldSize),
     );
   }
 }

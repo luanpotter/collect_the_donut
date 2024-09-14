@@ -1,4 +1,4 @@
-import 'package:collect_the_donut/utils.dart';
+import 'package:collect_the_donut/constants.dart';
 
 class Audio {
   static void example() {
