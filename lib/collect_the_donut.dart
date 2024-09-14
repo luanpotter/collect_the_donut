@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:collect_the_donut/components/donut.dart';
 import 'package:collect_the_donut/components/floor.dart';
+import 'package:collect_the_donut/components/hud.dart';
 import 'package:collect_the_donut/components/player.dart';
 import 'package:collect_the_donut/components/skeleton.dart';
 import 'package:collect_the_donut/components/wall.dart';
@@ -27,6 +28,7 @@ class CollectTheDonutGame extends FlameGame<CollectTheDonutWorld>
   Menu? menu;
 
   bool get isPaused => menu != null;
+  int score = 0;
 
   CollectTheDonutGame()
       : super(
@@ -42,11 +44,14 @@ class CollectTheDonutGame extends FlameGame<CollectTheDonutWorld>
   Future<void> initGame() async {
     _removeMenu();
     await world.initGame();
+    await camera.viewport.add(Hud());
+    score = 0;
     resume();
   }
 
   void restartGame() {
     world.resetGame();
+    camera.viewport.removeWhere((e) => e is! Menu);
     _updateMenu(MainMenu());
   }
 
@@ -105,6 +110,7 @@ class CollectTheDonutGame extends FlameGame<CollectTheDonutWorld>
   }
 
   void collectDonut(Donut donut) {
+    score++;
     world.spawnDonut();
   }
 }

@@ -29,5 +29,6 @@ class Styles {
 
   static final text = TextPaint(style: _style);
   static final textBig = TextPaint(style: _style.copyWith(fontSize: 24));
+  static final textHuge = TextPaint(style: _style.copyWith(fontSize: 64));
   static final title = TextPaint(style: _style.copyWith(fontSize: 128));
 }
