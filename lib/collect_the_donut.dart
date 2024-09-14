@@ -9,6 +9,7 @@ import 'package:collect_the_donut/menu/main_menu.dart';
 import 'package:collect_the_donut/menu/menu.dart';
 import 'package:collect_the_donut/menu/pause_menu.dart';
 import 'package:collect_the_donut/third_person_camera.dart';
+import 'package:collect_the_donut/utils.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart' show FlameGame;
 import 'package:flame_3d/camera.dart';
@@ -111,12 +112,11 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
     await addAll([
       player,
 
-      // lights
+      // lights and wisps
       LightComponent.ambient(
         intensity: 600.0,
       ),
-      Wisp(color: const Color(0xFF5522DD)),
-      Wisp(color: const Color(0xFF22DD55)),
+      ...List.generate(3, (_) => Wisp()),
 
       // floor and walls
       Floor(

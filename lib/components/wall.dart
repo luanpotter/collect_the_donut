@@ -25,7 +25,7 @@ class Wall extends flame.Component {
 
       add(
         _WallSection(
-          wallIndex: randomInt(Loader.models.walls.length),
+          wallIndex: randomInt(0, Loader.models.walls.length),
           position: position,
           rotation: rotation,
         ),

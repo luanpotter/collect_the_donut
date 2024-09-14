@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flame_3d/core.dart';
 
@@ -12,8 +13,17 @@ double randomDouble(double min, double max) {
   return min + _r.nextDouble() * (max - min);
 }
 
-int randomInt(int max) {
-  return _r.nextInt(max);
+int randomInt(int min, int max) {
+  return min + _r.nextInt(max - min);
+}
+
+Color randomColor() {
+  return Color.fromARGB(
+    255,
+    randomInt(0, 256),
+    randomInt(0, 256),
+    randomInt(0, 256),
+  );
 }
 
 extension Vector3Extensions on Vector3 {

@@ -15,9 +15,11 @@ class Wisp extends LightComponent with HasGameRef<CollectTheDonutGame> {
   double pathTimer = 0.0;
   double pathDuration = 0.0;
 
-  Wisp({
-    required super.color,
-  }) : super.point();
+  Wisp()
+      : super.point(
+          color: randomColor(),
+          intensity: 20.0,
+        );
 
   @override
   FutureOr<void> onLoad() async {
@@ -45,7 +47,7 @@ class Wisp extends LightComponent with HasGameRef<CollectTheDonutGame> {
     }
 
     final t = pathTimer / pathDuration;
-    const curve = Curves.easeInOut;
+    const curve = Curves.easeInOutCubic;
     move(Vector3Utils.lerp(position, _target, curve.transform(t)));
   }
 
@@ -57,7 +59,7 @@ class Wisp extends LightComponent with HasGameRef<CollectTheDonutGame> {
   void _randomTarget() {
     _target.setValues(
       randomDouble(-worldSize, worldSize),
-      randomDouble(0.3, 1.5),
+      randomDouble(0.2, 2.5),
       randomDouble(-worldSize, worldSize),
     );
   }
