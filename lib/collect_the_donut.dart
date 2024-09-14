@@ -110,15 +110,18 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
   FutureOr<void> initGame() async {
     await addAll([
       player,
+
+      // lights
+      LightComponent.ambient(
+        intensity: 600.0,
+      ),
       Wisp(color: const Color(0xFF5522DD)),
       Wisp(color: const Color(0xFF22DD55)),
-      LightComponent.ambient(
-        intensity: 0.8,
-      ),
+
+      // floor and walls
       Floor(
         size: Vector2.all(2 * worldSize),
       ),
-
       Wall(
         start: Vector3(worldSize, 0, -worldSize),
         end: Vector3(worldSize, 0, worldSize),

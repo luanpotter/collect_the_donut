@@ -70,6 +70,7 @@ class _VisualLight extends MeshComponent with HasGameRef<CollectTheDonutGame> {
           mesh: SphereMesh(
             radius: 0.05,
             material: SpatialMaterial(
+              albedoTexture: ColorTexture(color),
               albedoColor: color,
             ),
           ),

@@ -91,7 +91,7 @@ class Player extends ModelComponent
 
     lookAngle += -_input.x * _rotationSpeed * dt;
 
-    final speed = _linearSpeed * (_isRunning ? 2.0 : 1.0);
+    final speed = _isRunning ? _runningSpeed : _walkingSpeed;
     final movement = lookAt.scaled(-_input.y * speed * dt);
 
     position.add(movement);
@@ -154,7 +154,8 @@ enum PlayerWeapon {
 }
 
 const double _rotationSpeed = 3.0;
-const double _linearSpeed = 2.5;
+const double _walkingSpeed = 1.85;
+const double _runningSpeed = 4.5;
 
 const double _m = 0.75;
 final Vector3 _worldMin = Vector3(-worldSize + _m, 0, -worldSize + _m);
