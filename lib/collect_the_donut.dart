@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:collect_the_donut/audio.dart';
 import 'package:collect_the_donut/components/player.dart';
 import 'package:collect_the_donut/menu/main_menu.dart';
 import 'package:collect_the_donut/menu/menu.dart';
 import 'package:collect_the_donut/menu/pause_menu.dart';
 import 'package:collect_the_donut/palette.dart';
+import 'package:collect_the_donut/third_person_camera.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart' show FlameGame;
 import 'package:flame_3d/camera.dart';
@@ -24,18 +24,11 @@ class CollectTheDonutGame extends FlameGame<CollectTheDonutWorld>
   CollectTheDonutGame()
       : super(
           world: CollectTheDonutWorld(),
-          camera: CameraComponent3D(
-            mode: CameraMode.thirdPerson,
-            fovY: 75.0,
-            position: Vector3(-18, 6, -18),
-            up: Vector3(0.8, 1, 0.8),
-            target: Vector3(0, 0, 0),
-          ),
+          camera: ThirdPersonCamera(),
         );
 
   @override
   FutureOr<void> onLoad() async {
-    await Audio.init();
     _updateMenu(MainMenu());
   }
 
@@ -110,11 +103,11 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
   @override
   CollectTheDonutGame get game => findParent<CollectTheDonutGame>()!;
 
-  late Player player;
+  final Player player = Player();
 
   FutureOr<void> initGame() async {
     await addAll([
-      player = await Player.create(),
+      player,
       LightComponent.ambient(
         intensity: 1.0,
       ),

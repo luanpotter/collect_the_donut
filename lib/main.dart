@@ -1,8 +1,12 @@
 import 'package:collect_the_donut/collect_the_donut.dart';
+import 'package:collect_the_donut/loader.dart';
 import 'package:flame/game.dart' show GameWidget;
 import 'package:flutter/widgets.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Loader.init();
+
   runApp(const MainApp());
 }
 
