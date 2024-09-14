@@ -5,11 +5,13 @@ import 'package:collect_the_donut/components/player.dart';
 import 'package:collect_the_donut/menu/main_menu.dart';
 import 'package:collect_the_donut/menu/menu.dart';
 import 'package:collect_the_donut/menu/pause_menu.dart';
+import 'package:collect_the_donut/palette.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart' show FlameGame;
 import 'package:flame_3d/camera.dart';
 import 'package:flame_3d/components.dart';
 import 'package:flame_3d/game.dart';
+import 'package:flame_3d/resources.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,7 +24,13 @@ class CollectTheDonutGame extends FlameGame<CollectTheDonutWorld>
   CollectTheDonutGame()
       : super(
           world: CollectTheDonutWorld(),
-          camera: CameraComponent3D(),
+          camera: CameraComponent3D(
+            mode: CameraMode.thirdPerson,
+            fovY: 75.0,
+            position: Vector3(-18, 6, -18),
+            up: Vector3(0.8, 1, 0.8),
+            target: Vector3(0, 0, 0),
+          ),
         );
 
   @override
@@ -94,9 +102,6 @@ class CollectTheDonutGame extends FlameGame<CollectTheDonutWorld>
 }
 
 class CollectTheDonutWorld extends World3D with TapCallbacks {
-  static const maxEnemies = 32;
-  double spawnRate = 0.064 * 5;
-
   CollectTheDonutWorld()
       : super(
           clearColor: const Color(0xFF000000),
@@ -109,24 +114,22 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
 
   FutureOr<void> initGame() async {
     await addAll([
-      player = await Player.create(
-        position: Vector3(0, 0, -100),
-      ),
+      player = await Player.create(),
       LightComponent.ambient(
-        intensity: 0.75,
+        intensity: 1.0,
       ),
-      LightComponent.point(
-        position: Vector3.zero(),
-        intensity: 20.0,
+      MeshComponent(
+        mesh: PlaneMesh(
+          size: Vector2.all(32.0),
+          material: SpatialMaterial(
+            albedoTexture: ColorTexture(Palette.floor.color),
+          ),
+        ),
       ),
-      // await Donut.donut(
-      //   position: Vector3.zero(),
-      // ),
     ]);
   }
 
   void resetGame() {
     removeWhere((e) => true);
-    spawnRate = 0.1;
   }
 }

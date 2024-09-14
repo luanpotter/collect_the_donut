@@ -6,13 +6,24 @@ class Player extends ModelComponent {
   Player({
     required super.position,
     required super.model,
-  });
+  }) {
+    final weapons = {
+      '1H_Crossbow',
+      '2H_Crossbow',
+      'Knife',
+      'Throwable',
+      'Knife_Offhand',
+    };
+    for (final weapon in weapons) {
+      hideNodeByName(weapon);
+    }
 
-  static Future<Player> create({
-    required Vector3 position,
-  }) async {
+    playAnimationByName('Idle');
+  }
+
+  static Future<Player> create() async {
     return Player(
-      position: position,
+      position: Vector3.zero(),
       model: await ModelParser.parse('objects/rogue.glb'),
     );
   }
