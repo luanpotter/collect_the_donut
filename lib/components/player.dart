@@ -63,6 +63,10 @@ class Player extends ModelComponent
 
   @override
   void update(double dt) {
+    if (game.isPaused) {
+      return;
+    }
+
     super.update(dt);
 
     if (_actionTimer != 0.0) {

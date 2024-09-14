@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:collect_the_donut/components/player.dart';
+import 'package:collect_the_donut/components/wisp.dart';
 import 'package:collect_the_donut/menu/main_menu.dart';
 import 'package:collect_the_donut/menu/menu.dart';
 import 'package:collect_the_donut/menu/pause_menu.dart';
@@ -108,8 +109,10 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
   FutureOr<void> initGame() async {
     await addAll([
       player,
+      Wisp(color: const Color(0xFF5522DD)),
+      Wisp(color: const Color(0xFF22DD55)),
       LightComponent.ambient(
-        intensity: 1.0,
+        intensity: 0.8,
       ),
       MeshComponent(
         mesh: PlaneMesh(
