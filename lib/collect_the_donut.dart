@@ -1,18 +1,18 @@
 import 'dart:async';
 
+import 'package:collect_the_donut/components/floor.dart';
 import 'package:collect_the_donut/components/player.dart';
+import 'package:collect_the_donut/components/wall.dart';
 import 'package:collect_the_donut/components/wisp.dart';
 import 'package:collect_the_donut/menu/main_menu.dart';
 import 'package:collect_the_donut/menu/menu.dart';
 import 'package:collect_the_donut/menu/pause_menu.dart';
-import 'package:collect_the_donut/palette.dart';
 import 'package:collect_the_donut/third_person_camera.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart' show FlameGame;
 import 'package:flame_3d/camera.dart';
 import 'package:flame_3d/components.dart';
-import 'package:flame_3d/game.dart';
-import 'package:flame_3d/resources.dart';
+import 'package:flame_3d/core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -114,13 +114,17 @@ class CollectTheDonutWorld extends World3D with TapCallbacks {
       LightComponent.ambient(
         intensity: 0.8,
       ),
-      MeshComponent(
-        mesh: PlaneMesh(
-          size: Vector2.all(32.0),
-          material: SpatialMaterial(
-            albedoTexture: ColorTexture(Palette.floor.color),
-          ),
-        ),
+      Floor(
+        size: Vector2.all(32.0),
+      ),
+
+      Wall(
+        start: Vector3(16, 0, -16),
+        end: Vector3(16, 0, 16),
+      ),
+      Wall(
+        start: Vector3(-16, 0, 16),
+        end: Vector3(16, 0, 16),
       ),
     ]);
   }

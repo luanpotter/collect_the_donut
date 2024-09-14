@@ -13,14 +13,24 @@ class Loader {
 
 class Models {
   final Model rogue;
+  final Model floor;
+  final List<Model> walls;
 
   Models({
     required this.rogue,
+    required this.floor,
+    required this.walls,
   });
 
   static Future<Models> load() async {
     return Models(
       rogue: await ModelParser.parse('objects/rogue.glb'),
+      floor: await ModelParser.parse('objects/floor.gltf'),
+      walls: [
+        await ModelParser.parse('objects/wall_0.gltf'),
+        await ModelParser.parse('objects/wall_1.gltf'),
+        await ModelParser.parse('objects/wall_2.gltf'),
+      ],
     );
   }
 }

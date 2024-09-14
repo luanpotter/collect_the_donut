@@ -43,6 +43,8 @@ class Player extends ModelComponent
     _updateWeapon();
   }
 
+  bool _isRunning = false;
+
   void _updateWeapon() {
     for (final hide in PlayerWeapon.values) {
       hideNodeByName(hide.nodeName);
@@ -88,7 +90,8 @@ class Player extends ModelComponent
 
     lookAngle += -_input.x * _rotationSpeed * dt;
 
-    final movement = lookAt.scaled(-_input.y * _linearSpeed * dt);
+    final speed = _linearSpeed * (_isRunning ? 2.0 : 1.0);
+    final movement = lookAt.scaled(-_input.y * speed * dt);
     position.add(movement);
 
     return movement.length2 > 0.0;
@@ -101,6 +104,8 @@ class Player extends ModelComponent
         case PlayerAction.attack:
           playAnimationByIdx(0, resetClock: false);
       }
+    } else if (isMoving && _isRunning) {
+      playAnimationByName('Running_A', resetClock: false);
     } else if (isMoving) {
       playAnimationByName('Walking_C', resetClock: false);
     } else {
@@ -110,6 +115,7 @@ class Player extends ModelComponent
 
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    _isRunning = keysPressed.contains(LogicalKeyboardKey.shiftLeft);
     return readArrowLikeKeysIntoVector2(event, keysPressed, _input);
   }
 
