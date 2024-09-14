@@ -11,6 +11,7 @@ import 'package:flutter/widgets.dart';
 
 class Wisp extends LightComponent with HasGameRef<CollectTheDonutGame> {
   late final _VisualLight _mesh;
+  final Vector3 _start = Vector3.zero();
   final Vector3 _target = Vector3.zero();
   double pathTimer = 0.0;
   double pathDuration = 0.0;
@@ -41,14 +42,14 @@ class Wisp extends LightComponent with HasGameRef<CollectTheDonutGame> {
 
     pathTimer += dt;
     if (pathTimer >= pathDuration) {
-      pathTimer = 0.0;
       _randomTarget();
-      pathDuration = randomDouble(5, 5 + (_target - position).length);
+      pathTimer = 0.0;
+      pathDuration = randomDouble(2, 2 + (_target - _start).length / _speed);
     }
 
     final t = pathTimer / pathDuration;
     const curve = Curves.easeInOutCubic;
-    move(Vector3Utils.lerp(position, _target, curve.transform(t)));
+    move(Vector3Utils.lerp(_start, _target, curve.transform(t)));
   }
 
   void move(Vector3 position) {
@@ -57,6 +58,7 @@ class Wisp extends LightComponent with HasGameRef<CollectTheDonutGame> {
   }
 
   void _randomTarget() {
+    _start.setFrom(position);
     _target.setValues(
       randomDouble(-worldSize, worldSize),
       randomDouble(0.2, 2.5),
@@ -78,3 +80,5 @@ class _VisualLight extends MeshComponent with HasGameRef<CollectTheDonutGame> {
           ),
         );
 }
+
+const double _speed = 8.0;
