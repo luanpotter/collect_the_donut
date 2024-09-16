@@ -50,7 +50,7 @@ class Skeleton extends ModelComponent
 
     final player = game.world.player;
     final isAttacking = player.action == PlayerAction.attack;
-    if (collidesWith(player, radius: isAttacking ? 1.05 : 0.75)) {
+    if (collidesWith(player, radius: isAttacking ? 1.25 : 0.75)) {
       if (isAttacking) {
         die();
       } else {
@@ -122,7 +122,7 @@ class Skeleton extends ModelComponent
     if (_deathTimer != 0) {
       return;
     }
-    _deathTimer = 0.8; // death animation duration
+    _deathTimer = 0.7; // death animation duration
     playAnimationByName('Death_A');
   }
 }
