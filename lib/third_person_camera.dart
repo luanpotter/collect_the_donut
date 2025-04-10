@@ -8,7 +8,6 @@ class ThirdPersonCamera extends CameraComponent3D
     with HasGameRef<CollectTheDonutGame> {
   ThirdPersonCamera()
       : super(
-          mode: CameraMode.thirdPerson,
           fovY: 75.0,
           position: Vector3(-18, 6, -18),
           up: Vector3(0.8, 1, 0.8),
