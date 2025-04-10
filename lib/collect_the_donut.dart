@@ -17,7 +17,7 @@ import 'package:collect_the_donut/utils.dart';
 import 'package:flame/components.dart' as flame;
 import 'package:flame/events.dart';
 import 'package:flame/game.dart' show FlameGame;
-import 'package:flame_3d/camera.dart';
+import 'package:flame_3d/camera.dart' hide ThirdPersonCamera;
 import 'package:flame_3d/components.dart';
 import 'package:flame_3d/core.dart';
 import 'package:flutter/services.dart';
