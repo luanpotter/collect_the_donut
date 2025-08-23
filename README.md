@@ -18,14 +18,16 @@ In order to run, you will need to follow [the pre-requisites for setting up flam
 
 Enable Impeller by adding the following key to `/macos/Runner/Info.plist`:
 
+```plist
 <dict>
     ...
  <key>FLTEnableImpeller</key>
  <true/>
 </dict>
+```
 
 And then run with:
 
-```
+```bash
 flutter run -d macos --enable-flutter-gpu
 ```
