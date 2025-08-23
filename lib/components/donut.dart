@@ -4,15 +4,16 @@ import 'package:collect_the_donut/loader.dart';
 import 'package:collect_the_donut/utils.dart';
 import 'package:flame/components.dart' as flame;
 import 'package:flame_3d/core.dart';
-import 'package:flame_3d_extras/model/model_component.dart';
+import 'package:flame_3d/model.dart';
 
-class Donut extends ModelComponent with flame.HasGameRef<CollectTheDonutGame> {
+class Donut extends ModelComponent
+    with flame.HasGameReference<CollectTheDonutGame> {
   Donut({
     required Vector3 position,
   }) : super(
-          position: position,
-          model: Loader.models.donut,
-        );
+         position: position,
+         model: Loader.models.donut,
+       );
 
   @override
   void update(double dt) {

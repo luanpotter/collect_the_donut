@@ -8,14 +8,14 @@ import 'package:collect_the_donut/utils.dart';
 import 'package:flame/components.dart' as flame;
 import 'package:flame/geometry.dart';
 import 'package:flame_3d/core.dart';
-import 'package:flame_3d_extras/model/model_component.dart';
+import 'package:flame_3d/model.dart';
 
 class Skeleton extends ModelComponent
-    with flame.HasGameRef<CollectTheDonutGame> {
+    with flame.HasGameReference<CollectTheDonutGame> {
   Skeleton()
-      : super(
-          model: Loader.models.skeleton,
-        ) {
+    : super(
+        model: Loader.models.skeleton,
+      ) {
     _updateTarget();
     position.setFrom(_target);
   }

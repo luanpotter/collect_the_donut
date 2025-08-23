@@ -1,5 +1,5 @@
-import 'package:flame_3d_extras/model/model.dart';
-import 'package:flame_3d_extras/parser/model_parser.dart';
+import 'package:flame_3d/model.dart';
+import 'package:flame_3d/parser.dart';
 
 class Loader {
   Loader._();

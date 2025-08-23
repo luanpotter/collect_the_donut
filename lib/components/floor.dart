@@ -1,7 +1,7 @@
 import 'package:collect_the_donut/loader.dart';
 import 'package:flame/components.dart' as flame;
 import 'package:flame_3d/core.dart';
-import 'package:flame_3d_extras/model/model_component.dart';
+import 'package:flame_3d/model.dart';
 
 class Floor extends flame.Component {
   Floor({

@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:collect_the_donut/components/player.dart';
 import 'package:flame_3d/core.dart';
-import 'package:flame_3d_extras/model/model_component.dart';
+import 'package:flame_3d/model.dart';
 
 final _r = Random();
 

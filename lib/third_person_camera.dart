@@ -1,11 +1,11 @@
 import 'package:collect_the_donut/collect_the_donut.dart';
 import 'package:collect_the_donut/components/player.dart';
-import 'package:flame/components.dart' show HasGameRef;
+import 'package:flame/components.dart' show HasGameReference;
 import 'package:flame_3d/camera.dart';
 import 'package:flame_3d/core.dart';
 
 class ThirdPersonCamera extends CameraComponent3D
-    with HasGameRef<CollectTheDonutGame> {
+    with HasGameReference<CollectTheDonutGame> {
   ThirdPersonCamera()
       : super(
           fovY: 75.0,
@@ -14,7 +14,7 @@ class ThirdPersonCamera extends CameraComponent3D
           target: Vector3(0, 0, 0),
         );
 
-  Player get player => gameRef.world.player;
+  Player get player => game.world.player;
 
   @override
   void update(double dt) {

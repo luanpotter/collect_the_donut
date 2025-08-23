@@ -8,19 +8,19 @@ import 'package:flame/components.dart' as flame;
 import 'package:flame/events.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame_3d/core.dart';
-import 'package:flame_3d_extras/model/model_component.dart';
+import 'package:flame_3d/model.dart';
 import 'package:flutter/services.dart';
 
 class Player extends ModelComponent
     with
-        flame.HasGameRef<CollectTheDonutGame>,
+        flame.HasGameReference<CollectTheDonutGame>,
         flame.KeyboardHandler,
         TapCallbacks {
   Player()
-      : super(
-          position: Vector3.zero(),
-          model: Loader.models.rogue,
-        ) {
+    : super(
+        position: Vector3.zero(),
+        model: Loader.models.rogue,
+      ) {
     weapon = PlayerWeapon.knife;
   }
 
@@ -125,7 +125,7 @@ class Player extends ModelComponent
     if (action != null) {
       switch (action) {
         case PlayerAction.attack:
-          playAnimationByIdx(0, resetClock: false);
+          playAnimationByIndex(0, resetClock: false);
       }
     } else if (isMoving && _isRunning) {
       playAnimationByName('Running_A', resetClock: false);
@@ -160,8 +160,7 @@ class Player extends ModelComponent
 }
 
 enum PlayerAction {
-  attack(timer: 1.0666667222976685),
-  ;
+  attack(timer: 1.0666667222976685);
 
   final double timer;
 
@@ -173,8 +172,7 @@ enum PlayerWeapon {
   twoHandedCrossbow('2H_Crossbow'),
   knife('Knife'),
   throwable('Throwable'),
-  offhandKnife('Knife_Offhand'),
-  ;
+  offhandKnife('Knife_Offhand');
 
   final String nodeName;
 
