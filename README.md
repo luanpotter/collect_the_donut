@@ -18,7 +18,7 @@ In order to run, you will need to follow [the pre-requisites for setting up flam
 
 Enable Impeller by adding the following key to `/macos/Runner/Info.plist`:
 
-```plist
+```xml
 <dict>
     ...
  <key>FLTEnableImpeller</key>
